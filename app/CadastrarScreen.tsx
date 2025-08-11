@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { auth } from './services/firebaseConfig';
+import { auth } from '../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'expo-router';
 
 export default function CadastroScreen() {
   // Estados para armazenar os valores digitados
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const router = useRouter();
 
   // Função para simular o envio do formulário
   const handleCadastro = () => {
@@ -17,7 +20,8 @@ export default function CadastroScreen() {
     }
     createUserWithEmailAndPassword(auth, email, senha)
       .then((userCredential) => {
-        const user = userCredential.user;
+        const user = userCredential.user
+        router.push('/HomeScreen');
       })
       .catch((error) => {
         const errorCode= error.code
