@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { auth } from './services/firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function CadastroScreen() {
   // Estados para armazenar os valores digitados
@@ -13,8 +15,15 @@ export default function CadastroScreen() {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
-    Alert.alert('Sucesso', `Usuário ${nome} cadastrado com sucesso!`);
-    // Aqui você poderia fazer um fetch/axios para enviar ao backend
+    createUserWithEmailAndPassword(auth, email, senha)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode= error.code
+        const errorMessage = error.message
+        console.log(errorMessage)
+      });
   };
 
   return (
