@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { auth } from '../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CadastroScreen() {
   // Estados para armazenar os valores digitados
-  const [nome, setNome] = useState('');
+  
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
   const router = useRouter();
 
+  useEffect(async () => {
+    try {
+      const usuarioSalvo = await AsyncStorage.getItem('user')
+      if(usuarioSalvo){
+        router.push('/HomeScreen')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    //chamando a funcao
+    verificarUsuarioLogado()
+  }, []);
+
   // Função para simular o envio do formulário
   const handleCadastro = () => {
-    if (!nome || !email || !senha) {
+    if (!email || !senha) {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
     createUserWithEmailAndPassword(auth, email, senha)
       .then((userCredential) => {
         const user = userCredential.user
+        await AsyncStorage.setItem('user', JSON.stringify(user))
         router.push('/HomeScreen');
       })
       .catch((error) => {
@@ -109,3 +124,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+function verificarUsuarioLogado() {
+  throw new Error('Function not implemented.');
+}
+
