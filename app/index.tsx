@@ -3,6 +3,8 @@ import React, { useState,useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import {auth} from '../services/firebaseConfig'
 
 export default function LoginScreen() {
   // Estados para armazenar os valores digitados
@@ -33,8 +35,14 @@ export default function LoginScreen() {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
-    Alert.alert('Sucesso ao logar', `Usuário logado com sucesso!`);
-    // Aqui você poderia fazer um fetch/axios para enviar ao backend
+    //Funcao para realizar login
+    signInWithEmailAndPassword(auth,email,senha)
+      .then(async(userCredential)=>{
+        const user = userCredential.user
+        AsyncStorage.setItem('@user',JSON.stringify(user))
+        router.push('/HomeScreen')
+        //console.log(user)
+      })
   };
 
   return (

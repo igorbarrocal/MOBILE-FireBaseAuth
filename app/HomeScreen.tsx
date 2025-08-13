@@ -14,7 +14,7 @@ export default function HomeScreen(){
     return(
         <SafeAreaView>
             <Text>Seja bem-vindo - Você está Logado!!</Text>
-            <Button title="Sair da conta" onPress={} />
+            <Button title="Sair da conta" onPress={realizarLogoff} />
         </SafeAreaView>
     )
 }
