@@ -1,27 +1,24 @@
-
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import {initializeAuth} from "firebase/auth";
+import { initializeAuth } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// ira pegar o getReactNativePersistence sem a necesidade de tipagem
+//Irá pegar o getReactNativePersistence sem a necessidade de tipagem
 const {getReactNativePersistence} = require("firebase/auth") as any
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyA4CRzI39qB95rS1UX7cTh6PuNP1IHsldU",
-  authDomain: "projetoaulaautenticacao.firebaseapp.com",
-  projectId: "projetoaulaautenticacao",
-  storageBucket: "projetoaulaautenticacao.firebasestorage.app",
-  messagingSenderId: "530213090198",
-  appId: "1:530213090198:web:0995d800497d02161823b7"
+  apiKey: "AIzaSyAjqgzfaa2cda6oTM6o_aSt_lYUGc5Syck",
+  authDomain: "projetoaulafirebase-27e46.firebaseapp.com",
+  projectId: "projetoaulafirebase-27e46",
+  storageBucket: "projetoaulafirebase-27e46.firebasestorage.app",
+  messagingSenderId: "357350969979",
+  appId: "1:357350969979:web:06785ff36accb3a36488de"
 };
 
-//initializa o firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const auth = initializeAuth(app,{
-    persistence:getReactNativePersistence(AsyncStorage)
-});
+  persistence:getReactNativePersistence(AsyncStorage)
+})
 
-export { auth };
+export {auth}

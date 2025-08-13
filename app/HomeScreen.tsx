@@ -1,10 +1,10 @@
-import { Text} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function HomeScreen() {
+export default function HomeScreen(){
     return(
         <SafeAreaView>
-            <Text>Bem-vindo à tela inicial!</Text>
+            <Text>Seja bem-vindo - Você está Logado!!</Text>
         </SafeAreaView>
     )
-} 
+}

@@ -1,48 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { auth } from '../services/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {auth} from '../services/firebaseConfig'
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CadastroScreen() {
   // Estados para armazenar os valores digitados
-  
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const router = useRouter();
-
-  useEffect(async () => {
-    try {
-      const usuarioSalvo = await AsyncStorage.getItem('user')
-      if(usuarioSalvo){
-        router.push('/HomeScreen')
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    //chamando a funcao
-    verificarUsuarioLogado()
-  }, []);
+  const router = useRouter()//Hook para navegação
 
   // Função para simular o envio do formulário
   const handleCadastro = () => {
-    if (!email || !senha) {
+    if (!nome || !email || !senha) {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then((userCredential) => {
+    createUserWithEmailAndPassword(auth,email,senha)
+      .then(async(userCredential)=>{
         const user = userCredential.user
-        await AsyncStorage.setItem('user', JSON.stringify(user))
-        router.push('/HomeScreen');
+        await AsyncStorage.setItem('@user',JSON.stringify(user))
+        
+        router.push('/HomeScreen')
+        //console.log(user)
       })
-      .catch((error) => {
-        const errorCode= error.code
+      .catch((error)=>{
+        const errorCode = error.code
         const errorMessage = error.message
         console.log(errorMessage)
-      });
+      })
   };
 
   return (
@@ -124,7 +113,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-function verificarUsuarioLogado() {
-  throw new Error('Function not implemented.');
-}
-
