@@ -42,7 +42,11 @@ export default function LoginScreen() {
         AsyncStorage.setItem('@user',JSON.stringify(user))
         router.push('/HomeScreen')
         //console.log(user)
-      })
+      }).catch((error)=>{
+        const errorCode = error.code
+        const errorMessage = error.message
+        console.log(errorMessage)
+      });
   };
 
   return (
