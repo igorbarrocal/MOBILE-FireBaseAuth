@@ -3,8 +3,9 @@ import React, { useState,useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import {auth} from '../services/firebaseConfig'
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import {auth} from '../services/firebaseConfig';
+
 
 export default function LoginScreen() {
   // Estados para armazenar os valores digitados
@@ -47,6 +48,16 @@ export default function LoginScreen() {
         const errorMessage = error.message
         console.log(errorMessage)
       });
+
+    const esqueceuSenha = () => {
+      if (!email) {
+        Alert.alert('Atenção', 'Por favor, insira seu e-mail para redefinir a senha.');
+        return;
+      }
+      sendPasswordResetEmail(auth, email)
+      .then(() => alert('E-mail de redefinição de senha enviado com sucesso!')) 
+      .catch((error) => alert('Erro ao enviar e-mail de redefinição de senha: '));
+    }
   };
 
   return (
