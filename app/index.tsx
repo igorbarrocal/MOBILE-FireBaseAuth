@@ -60,6 +60,16 @@ export default function LoginScreen() {
     }
   };
 
+  const esqueceuSenha = () => {
+    if (!email) {
+      Alert.alert('Atenção', 'Por favor, insira seu e-mail para redefinir a senha.');
+      return;
+    }
+    sendPasswordResetEmail(auth, email)
+      .then(() => Alert.alert('Sucesso', 'E-mail de redefinição de senha enviado com sucesso!'))
+      .catch((error) => Alert.alert('Erro', 'Erro ao enviar e-mail de redefinição de senha: ' + error.message));
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Realizar login</Text>
@@ -92,6 +102,8 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       <Link href="CadastrarScreen" style={{marginTop:20,color:'white',marginLeft:150}}>Cadastre-se</Link>
+
+      <Text style={{marginTop:20,color:'white',marginLeft:130}} onPress={esqueceuSenha}>Esqueceu a senha?</Text>
     </View>
   );
 }
