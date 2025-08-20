@@ -1,9 +1,10 @@
-import { Alert, Button, Text } from "react-native";
+import { Alert, Button, Text, TextInput, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { auth } from "../services/firebaseConfig";
 import {deleteUser} from "firebase/auth";
+import ItemLoja from "../components/ItemLoja";
 
 
 export default function HomeScreen(){
@@ -44,9 +45,25 @@ export default function HomeScreen(){
     return(
         <SafeAreaView>
             <Text>Seja bem-vindo - Você está Logado!!</Text>
+            <SafeAreaView style={styles.container}></SafeAreaView>
             <Button title="Sair da conta" onPress={realizarLogoff} />
             <Button title="Excluir conta" color="red" onPress={exluirConta} />
-            <Button  title="Alterar Senha" onPress={()=>router.push('AlterarSenhaScreen')}/>
+            <Button title="Alterar Senha" onPress={()=>router.push('AlterarSenhaScreen')}/>
+            <ItemLoja/>
+            <ItemLoja/>
+            <ItemLoja/>
+            <TextInput placeholder="Digite o nome do produto" style={styles.input}/>
+           
         </SafeAreaView>
     )
+    
 }
+const styles = StyleSheet.create({
+    container:{
+        flex:1
+    },
+    input:{
+       backgroundColor:'lightgray' ,
+       width:'90%'
+    }
+})
