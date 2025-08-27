@@ -8,6 +8,7 @@ import {auth} from '../services/firebaseConfig'
 import { deleteUser } from "firebase/auth";
 import ItemLoja from "../components/ItemLoja";
 import { useEffect, useState } from "react";
+import React from "react";
 
 
 export default function HomeScreen(){
@@ -57,7 +58,7 @@ export default function HomeScreen(){
         try{
             const docRef = await addDoc(collection(db,'items'),{
                 nomeProduto:nomeProduto,
-                isCheked:false
+                isChecked:false
             })
             //console.log("Sucesso ao salvar", docRef.id)
             Alert.alert("Sucesso","Produto salvo com sucesso.")
