@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import {auth} from '../services/firebaseConfig'
+import {auth} from '../src/services/firebaseConfig'
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   botao: {
-    backgroundColor: '#b30000',
+    backgroundColor: '#00B37E',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

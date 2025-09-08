@@ -1,33 +1,32 @@
 import { StyleSheet, View, Text, Pressable,Alert } from "react-native";
 import { AntDesign, MaterialIcons } from '@expo/vector-icons'
 import { useEffect, useState } from "react";
-import {updateDoc,doc,db, deleteDoc} from '../services/firebaseConfig'
-import React from "react";
+import {updateDoc,doc,db,deleteDoc} from '../services/firebaseConfig'
 
 export default function ItemLoja(props: any) {
     const [isChecked, setIsChecked] = useState(props.isChecked)
 
-    const updateIsChecked = async () => {
-        const itemRef = doc(db, 'items', props.id)
-        await updateDoc(itemRef, {
-            isChecked: isChecked 
+    const updateIsChecked = async()=>{
+        const itemRef = doc(db,'items',props.id)
+
+        await updateDoc(itemRef,{
+            isChecked:isChecked
         })
     }
-    const deleteItem = async () => {
-        Alert.alert("CONFIRMAR EXCLUSÃO", "Tem certeza que deseja excluir este item?",[
-            {text:'Cancelar', style:'cancel'},
-            {text:'Excluir', style:'destructive', onPress: async()=>{
-                await deleteDoc(doc(db, 'items', props.id))
-            }}
+
+    const deletarItem = async ()=>{
+        Alert.alert("Confirmar Exclusão?","Tem certeza que deeja excluir o produto?",[
+            {text:'Cancelar'},
+            {text:'Excluir',onPress:async()=>await deleteDoc(doc(db,'items',props.id))}
         ],{
             cancelable:true
         })
-    }    
+       
+    }
 
-
-    useEffect(() => {
+    useEffect(()=>{
         updateIsChecked()
-    }, [isChecked])
+    },[isChecked])
 
     return (
         <View style={styles.container}>
@@ -40,7 +39,7 @@ export default function ItemLoja(props: any) {
 
             </Pressable>
             <Text style={styles.title}>{props.nomeProduto}</Text>
-            <Pressable onPress={deleteItem}>
+            <Pressable onPress={deletarItem}>
                 <MaterialIcons name='delete' color='black' size={24} />
             </Pressable>
         </View>

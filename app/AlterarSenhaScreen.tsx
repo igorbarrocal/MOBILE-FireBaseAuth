@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import {  EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
-import {auth} from '../services/firebaseConfig'
+import { EmailAuthProvider, reauthenticateWithCredential,updatePassword } from 'firebase/auth';
+import {auth} from '../src/services/firebaseConfig'
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,35 +15,37 @@ export default function CadastroScreen() {
 
   // Função para simular o envio do formulário
   const handleAlterarSenha = async() => {
-    if (!senhaAtual|| !novaSenha || !confirmarSenha) {
+    if (!senhaAtual || !novaSenha || !confirmarSenha) {
       Alert.alert('Atenção', 'Preencha todos os campos!');
       return;
     }
-    if(novaSenha !=confirmarSenha){
+    if(novaSenha!==confirmarSenha){
         Alert.alert("Erro","As senhas não coincidem!")
-        return;
+        return
     }
-    if(novaSenha.length < 6){
-        Alert.alert("Erro","A nova senha deve ter pelo menos 6 caracteres!")
-        return;
+    if(novaSenha.length<6){
+        Alert.alert("Erro","A nova senha de no mínimo 6 caracteres.")
+        return
     }
-    try {
-      const user = auth.currentUser;
-        if (!user || !user.email) {
-          Alert.alert('Erro', 'Usuário não encontrado.');
-          return;
+    try{
+        const user = auth.currentUser
+        if(!user || !user.email){
+            Alert.alert("Erro","Nenhum usuário logado.")
+            return
         }
-        //Cria as credenciais de autenticação
-        const credential = EmailAuthProvider.credential(user.email, senhaAtual);
-        //Reautentica o usuário
-        await reauthenticateWithCredential(user, credential);
-        //Atualiza a senha do usuário
-        await updatePassword(user, novaSenha);
-        Alert.alert('Sucesso', 'Senha alterada com sucesso!');
-        router.push('/HomeScreen');
-    }  catch (error) {
-        console.error('Erro ao alterar a senha:', error);
-        Alert.alert('Erro', 'Não foi possível alterar a senha.');
+
+        //Cria as credenciais para reautenticar o usuário
+        const credencial = EmailAuthProvider.credential(user.email,senhaAtual)
+        await reauthenticateWithCredential(user,credencial)
+
+        //Atualizar a senha
+        await updatePassword(user,novaSenha)
+        Alert.alert("Suceso","Senha alterada com sucesso.")
+        router.push("/HomeScreen")
+
+    }catch(error){
+        console.log("Erro ao atualizar senha")    
+        Alert.alert("Senha não alterada")
     }
     
   };
@@ -61,7 +63,7 @@ export default function CadastroScreen() {
         onChangeText={setSenhaAtual}
       />
 
-      {/* Campo Nova Senha*/}
+      {/* Campo Nova Senha */}
       <TextInput
         style={styles.input}
         placeholder="Digite a nova senha"
@@ -70,7 +72,7 @@ export default function CadastroScreen() {
         onChangeText={setNovaSenha}
       />
 
-      {/* Campo Confirmar Senha*/}
+      {/* Campo Confirmar Senha */}
       <TextInput
         style={styles.input}
         placeholder="Digite novamente a nova senha"
@@ -82,7 +84,7 @@ export default function CadastroScreen() {
 
       {/* Botão */}
       <TouchableOpacity style={styles.botao} onPress={handleAlterarSenha}>
-        <Text style={styles.textoBotao}>Alterar Senhar</Text>
+        <Text style={styles.textoBotao}>Alterar Senha</Text>
       </TouchableOpacity>
     </View>
   );
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   botao: {
-    backgroundColor: '#b30000',
+    backgroundColor: '#00B37E',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -124,5 +126,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-
 });
