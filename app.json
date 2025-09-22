@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "scheme": "AulaAuth",
     "notification": {
       "icon": "./assets/notification-icon.png"
@@ -30,9 +30,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "useNextNotificationsApi": true,
-      "package": "com.igorbarrocal.AulaAuth"
+      "package": "com.igorbarrocal.aulaauth",
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "buildToolsVersion": "34.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -45,7 +47,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "2c652550-8503-4d4f-9101-e3430ed5a011"
+        "projectId": "1cdf2bce-ea03-4c8c-8030-51357773a081"
       }
     }
   }
